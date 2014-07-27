@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Canvas Snake</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css" media="screen">
+        canvas, img { display:block; margin:1em auto; border:1px solid black; }
+        canvas { background:url(background.jpg) }
+        #snake-food { display: none;}
+    </style>
+    </head>
+    <body>
+    	<canvas id='canvas' width='600' height='300'>
+    	</canvas>
+        <img id="snake-food" src="apple.png">
+        <form class="snake-settings form-control">
+            <div class="form-group">
+                <label for="snake-score">Points:</label> 
+                <span id="snake-score">0</span>
+            </div>
+            <div class="form-group">
+                <label for="snake-speed">Game Speed:</label>
+                <input type="range" id="snake-speed" min="50" max="300" step="50" value="200"></input>
+                <output for="snake-speed" id="speed">200</output>
+            </div>
+            <div class="form-group">
+                <label for="snake-color">Snake Color:</label>
+                <input type="color" id="snake-color"></input>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="pause-op" value="pause"> pause (Use button P to pause)</input><br>
+                <input type="checkbox" name="reverse-op" value="reverse"> reverse snake (Use button R to reverse)</input>
+            </div>
+            <button type="button" class="btn btn-primary start-game">Start Game</button>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary top-chart">Top Chart</button>
+                <div class="top-chart-results container">
+                </div>
+            </div>
+        </form>
+    	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/handlebars/handlebars.min.js"></script>
+    	<script type="text/javascript" src="app.js"></script>
+        <script id="top-chart-results-tpl" type="text/x-handlebars-template">
+            <div class="row">
+                <div class="col-xs-6"><strong>User</strong></div>
+                <div class="col-xs-6"><strong>Score</strong></div>
+            </div>
+            {{#each results}}
+                <div class="row">
+                    <div class="name col-xs-6">{{{name}}}</div>
+                    <div class="score col-xs-6">{{{score}}}</div>
+                </div>
+            {{/each}}
+    </script>
+    </body>
+ </html>
