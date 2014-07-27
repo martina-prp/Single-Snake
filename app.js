@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d');
@@ -12,7 +12,7 @@ var gameLoopIntervalId,
 
 var snake = (function(context) {
   var tail = [];
-  var direction = "right";
+  var direction = 'right';
 
   [1, 2, 3].forEach(function(i) {
     tail.push(new Pixel(i, 1, 10, color, context));
@@ -27,16 +27,16 @@ var snake = (function(context) {
 
   var move = function() {
     switch(direction) {
-      case "up":
+      case 'up':
         var new_head = new Pixel(head.x, head.y - 1, 10, color,context);
         break;
-      case "down":
+      case 'down':
         var new_head = new Pixel(head.x, head.y + 1, 10, color, context);
         break;
-      case "left":
+      case 'left':
         var new_head = new Pixel(head.x - 1, head.y, 10, color, context);
         break;
-      case "right":
+      case 'right':
         var new_head = new Pixel(head.x + 1, head.y, 10, color, context);
         break;
     }
@@ -46,7 +46,7 @@ var snake = (function(context) {
   }
 
   var setDirection = function(dir) {
-    if(dir === "left" && direction === "right" || dir === "right" && direction === "left" || dir === "up" && direction === "down" || dir === "down" && direction === "up" ) {
+    if(dir === 'left' && direction === 'right' || dir === 'right' && direction === 'left' || dir === 'up' && direction === 'down' || dir === 'down' && direction === 'up' ) {
       return false;
     }
     else {
@@ -126,21 +126,21 @@ var snake = (function(context) {
 
   var reverse = function (coord) {
   switch(direction) {
-    case "up":
+    case 'up':
       var new_head = new Pixel(coord.x, coord.y + 1, 10, color,context);
-      direction = "down";
+      direction = 'down';
       break;
-    case "down":
+    case 'down':
       var new_head = new Pixel(coord.x, coord.y - 1, 10, color, context);
-      direction = "up";
+      direction = 'up';
       break;
-    case "left":
+    case 'left':
       var new_head = new Pixel(coord.x + 1, coord.y, 10, color, context);
-      direction = "right";
+      direction = 'right';
       break;
-    case "right":
+    case 'right':
       var new_head = new Pixel(coord.x - 1, coord.y, 10, color, context);
-      direction = "left";
+      direction = 'left';
       break;
     }
     return new_head;
@@ -180,10 +180,10 @@ initKeyController(function(direction){
 
 function initKeyController(cb) {
   var keyCodeToDirectionTable = {
-    37: "left",
-    38: "up",
-    39: "right",
-    40: "down"
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down'
   };
 
   $(document).keydown(function(e) {
@@ -250,16 +250,25 @@ $('.start-game').on('click', function(event) {
 });
 
 $('.top-chart').on('click', function() {
-  var data = localStorage.getItem('snake-game');
-  data = JSON.parse(data);
-  data.sort(function(a, b) {
-    return parseInt(b.score) - parseInt(a.score);
-  })
-  var results = data.slice(0, 9);
-  var topChartTpl = $('#top-chart-results-tpl').html();
-  var template = Handlebars.compile(topChartTpl);
-  var html = template({results: data});
-  $('.top-chart-results').append(html);
+  if ($(this).hasClass('hide-chart')) {console.log('nanan');
+    $('.top-chart-results').empty();
+    $(this).removeClass('hide-chart');
+    $(this).html('Top Chart');
+  }
+  else {
+    var data = localStorage.getItem('snake-game');
+    data = JSON.parse(data);
+    data.sort(function(a, b) {
+      return parseInt(b.score) - parseInt(a.score);
+    })
+    var results = data.slice(0, 9);
+    var topChartTpl = $('#top-chart-results-tpl').html();
+    var template = Handlebars.compile(topChartTpl);
+    var html = template({results: data});
+    $('.top-chart-results').append(html);
+    $(this).html('Hide chart');
+    $(this).addClass('hide-chart');
+  }
 });
 
 function Pixel(x, y, size, color, context) {
